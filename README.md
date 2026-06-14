@@ -198,8 +198,6 @@ This project demonstrates practical experience with:
 - Handling complete order lifecycle management.
 
 ## Future Enhancements
-
-- Search functionality for food items.
 - Coupon and discount support.
 - Address management system.
 - Order history and invoice downloads.
@@ -208,15 +206,6 @@ This project demonstrates practical experience with:
 - Role-based access control.
 - Deployment with Docker and cloud hosting.
 
-## README Customization Tips
-
-You can further improve this README by adding:
-
-- Project screenshots.
-- Live demo link.
-- Admin login demo credentials.
-- API endpoint documentation.
-- Deployment links for frontend, admin, and backend.
 
 ## Author
 
