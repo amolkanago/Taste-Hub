@@ -4,7 +4,6 @@ import { StoreContext } from '../../Context/StoreContext'
 import { assets } from '../../assets/assets';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import axios from 'axios';
 
 const PlaceOrder = () => {
 
@@ -45,9 +44,14 @@ const PlaceOrder = () => {
             items: orderItems,
             amount: getTotalCartAmount() + 5,
         }
-        let response = await axios.post(url + "/api/order/place", orderData, { headers: { token } });
-        if (response.data.success) {
-            const { session_url } = response.data;
+        const response = await fetch(url + "/api/order/place", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", token },
+            body: JSON.stringify(orderData)
+        });
+        const responseData = await response.json();
+        if (responseData.success) {
+            const { session_url } = responseData;
             window.location.replace(session_url);
         }
         else {

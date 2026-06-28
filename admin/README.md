@@ -19,7 +19,7 @@ This dashboard is intended for admin users who need to:
 
 - React.js
 - React Router DOM
-- Axios
+- Fetch API
 - CSS / Tailwind CSS *(if used)*
 - Context API / Redux *(based on implementation)*
 
