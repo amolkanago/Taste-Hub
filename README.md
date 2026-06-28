@@ -17,7 +17,7 @@ The application is divided into three main parts:
 ### Frontend
 - React.js
 - CSS / Tailwind CSS *(optional, if used in your project)*
-- Axios
+- Fetch API
 - React Router DOM
 - Context API / Redux *(based on your implementation)*
 

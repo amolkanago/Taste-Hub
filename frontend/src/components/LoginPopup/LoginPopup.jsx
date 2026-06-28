@@ -2,7 +2,6 @@ import React, { useContext, useState } from 'react'
 import './LoginPopup.css'
 import { assets } from '../../assets/assets'
 import { StoreContext } from '../../Context/StoreContext'
-import axios from 'axios'
 import { toast } from 'react-toastify'
 
 const LoginPopup = ({ setShowLogin }) => {
@@ -32,11 +31,16 @@ const LoginPopup = ({ setShowLogin }) => {
         else {
             new_url += "/api/user/register"
         }
-        const response = await axios.post(new_url, data);
-        if (response.data.success) {
-            setToken(response.data.token)
-            localStorage.setItem("token", response.data.token)
-            loadCartData({token:response.data.token})
+        const response = await fetch(new_url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        const responseData = await response.json();
+        if (responseData.success) {
+            setToken(responseData.token)
+            localStorage.setItem("token", responseData.token)
+            loadCartData({token:responseData.token})
             setShowLogin(false)
         }
         else {

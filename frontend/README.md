@@ -20,7 +20,7 @@ This application is intended for end users who want to:
 
 - React.js
 - React Router DOM
-- Axios
+- Fetch API
 - Context API / Redux *(based on implementation)*
 - CSS / Tailwind CSS *(if used)*
 - Stripe integration for checkout

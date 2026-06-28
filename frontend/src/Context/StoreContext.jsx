@@ -1,6 +1,5 @@
 import { createContext, useEffect, useState } from "react";
 import { food_list, menu_list } from "../assets/assets";
-import axios from "axios";
 export const StoreContext = createContext(null);
 
 const StoreContextProvider = (props) => {
@@ -19,14 +18,22 @@ const StoreContextProvider = (props) => {
             setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
         }
         if (token) {
-            await axios.post(url + "/api/cart/add", { itemId }, { headers: { token } });
+            await fetch(url + "/api/cart/add", {
+                method: "POST",
+                headers: { "Content-Type": "application/json", token },
+                body: JSON.stringify({ itemId })
+            });
         }
     }
 
     const removeFromCart = async (itemId) => {
         setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }))
         if (token) {
-            await axios.post(url + "/api/cart/remove", { itemId }, { headers: { token } });
+            await fetch(url + "/api/cart/remove", {
+                method: "POST",
+                headers: { "Content-Type": "application/json", token },
+                body: JSON.stringify({ itemId })
+            });
         }
     }
 
@@ -42,13 +49,19 @@ const StoreContextProvider = (props) => {
     }
 
     const fetchFoodList = async () => {
-        const response = await axios.get(url + "/api/food/list");
-        setFoodList(response.data.data)
+        const response = await fetch(url + "/api/food/list");
+        const data = await response.json();
+        setFoodList(data.data)
     }
 
     const loadCartData = async (token) => {
-        const response = await axios.post(url + "/api/cart/get", {}, { headers: token });
-        setCartItems(response.data.cartData);
+        const response = await fetch(url + "/api/cart/get", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", ...token },
+            body: JSON.stringify({})
+        });
+        const data = await response.json();
+        setCartItems(data.cartData);
     }
 
     useEffect(() => {
