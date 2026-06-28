@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './Orders.css'
 import { toast } from 'react-toastify';
-import axios from 'axios';
 import { assets, url } from '../../assets/assets';
 
 const Order = () => {
@@ -9,10 +8,11 @@ const Order = () => {
   const [orders, setOrders] = useState([]);
 
   const fetchAllOrders = async () => {
-    const response = await axios.get(`${url}/api/order/list`)
-    if (response.data.success) {
-      setOrders(response.data.data.reverse());
-      console.log(response.data.data);
+    const response = await fetch(`${url}/api/order/list`)
+    const responseData = await response.json();
+    if (responseData.success) {
+      setOrders(responseData.data.reverse());
+      console.log(responseData.data);
     }
     else {
       toast.error("Error")
@@ -21,11 +21,16 @@ const Order = () => {
 
   const statusHandler = async (event,orderId) => {
     console.log(event,orderId);
-    const response = await axios.post(`${url}/api/order/status`,{
-      orderId,
-      status:event.target.value
+    const response = await fetch(`${url}/api/order/status`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        orderId,
+        status: event.target.value
+      })
     })
-    if(response.data.success)
+    const responseData = await response.json();
+    if(responseData.success)
     {
       await fetchAllOrders();
     }
