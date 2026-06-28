@@ -7,18 +7,21 @@ const FoodDisplay = ({ category }) => {
 
   const { food_list } = useContext(StoreContext);
 
+  if (!food_list) return <p>Loading...</p>;
+  
   return (
-    <div className='food-display' id='food-display'>
+    <div className='food-display'>
       <h2>Top dishes near you</h2>
+
       <div className='food-display-list'>
-        {food_list.map((item) => {
-          if (category === "All" || category === item.category) {
-            return <FoodItem key={item._id} image={item.image} name={item.name} desc={item.description} price={item.price} id={item._id} />
-          }
-        })}
+        {food_list
+          .filter(item => category === "All" || category === item.category)
+          .map(item => (
+            <FoodItem key={item._id} {...item} />
+          ))}
       </div>
     </div>
-  )
+  );
 }
 
 export default FoodDisplay
